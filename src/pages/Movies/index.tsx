@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress, Alert } from "@mui/material";
 import SearchBar from "../../components/SearchBar";
 import { i18nMap } from "../../i18n/map";
 import { useTranslation } from "react-i18next";
@@ -26,9 +26,19 @@ export default function Movies() {
         onSearch={setSearchTerm}
       />
 
-      {searchMoviesResponse.isLoading && <p>Loading...</p>}
+      {searchMoviesResponse.isLoading && (
+        <Box display="flex" justifyContent="center" padding={4}>
+          <CircularProgress />
+        </Box>
+      )}
 
-      {searchMoviesResponse.error && <p>Something went wrong</p>}
+      {searchMoviesResponse.error && (
+        <Box padding={2}>
+          <Alert severity="error">
+            Failed to load movies. Please try again later.
+          </Alert>
+        </Box>
+      )}
 
       {!searchMoviesResponse.isLoading && !searchMoviesResponse.error && (
         <MoviesTable movies={movies} />

@@ -15,7 +15,11 @@ export class SearchMoviesResponseMapper {
         .map((result) => {
           try {
             return container.resolve(MovieMapper).mapDtoToModel(result);
-          } catch {
+          } catch (error) {
+            console.error(
+              `Failed to map movie with ID ${result.id}:`,
+              error
+            );
             return null;
           }
         })
