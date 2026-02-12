@@ -13,10 +13,10 @@ import { useTranslation } from "react-i18next";
 import { i18nMap } from "../i18n/map";
 
 type Props = {
-  movies: MovieModel[];
+  movies?: MovieModel[];
 };
 
-export default function MoviesTable({ movies }: Props) {
+export default function MoviesTable({ movies = [] }: Props) {
   const { t, i18n } = useTranslation();
   const currentLang = i18n.language;
 
