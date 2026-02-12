@@ -2,6 +2,7 @@ import { container, singleton } from "tsyringe";
 import { SearchMoviesResponseDto } from "../../services/api/tmdb/dto";
 import { SearchMoviesResponseModel } from "../../models/SearchMoviesResponseModel";
 import { MovieMapper } from "../MovieMapper";
+import { MovieModel } from "../../models/MovieModel";
 
 @singleton()
 export class SearchMoviesResponseMapper {
@@ -10,9 +11,19 @@ export class SearchMoviesResponseMapper {
   ): SearchMoviesResponseModel {
     return new SearchMoviesResponseModel({
       page: dto.page,
-      results: dto.results.map((result) =>
-        container.resolve(MovieMapper).mapDtoToModel(result)
-      ),
+      results: dto.results
+        .map((result) => {
+          try {
+            return container.resolve(MovieMapper).mapDtoToModel(result);
+          } catch (error) {
+            console.error(
+              `Failed to map movie with ID ${result.id}:`,
+              error
+            );
+            return null;
+          }
+        })
+        .filter((m): m is MovieModel => m !== null),
       totalPages: dto.total_pages,
       totalResults: dto.total_results,
     });

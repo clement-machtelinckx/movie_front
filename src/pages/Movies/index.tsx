@@ -1,4 +1,4 @@
-import { Box } from "@mui/material";
+import { Box, CircularProgress, Alert } from "@mui/material";
 import SearchBar from "../../components/SearchBar";
 import { i18nMap } from "../../i18n/map";
 import { useTranslation } from "react-i18next";
@@ -14,7 +14,10 @@ export default function Movies() {
   const currentLang = useCurrentLang();
   const { searchMoviesQueryResult: searchMoviesResponse } =
     useSearchMoviesQuery(searchTerm, currentLang);
-  const movies = searchMoviesResponse.data?.results ?? ([] as MovieModel[]);
+
+  // Filter out any undefined or null values from the results
+  const movies =
+    searchMoviesResponse.data?.results?.filter(Boolean) ?? ([] as MovieModel[]);
 
   return (
     <Box>
@@ -23,7 +26,23 @@ export default function Movies() {
         onSearch={setSearchTerm}
       />
 
-      <MoviesTable movies={movies} />
+      {searchMoviesResponse.isLoading && (
+        <Box display="flex" justifyContent="center" padding={4}>
+          <CircularProgress />
+        </Box>
+      )}
+
+      {searchMoviesResponse.error && (
+        <Box padding={2}>
+          <Alert severity="error">
+            Failed to load movies. Please try again later.
+          </Alert>
+        </Box>
+      )}
+
+      {!searchMoviesResponse.isLoading && !searchMoviesResponse.error && (
+        <MoviesTable movies={movies} />
+      )}
     </Box>
   );
 }

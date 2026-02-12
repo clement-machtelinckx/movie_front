@@ -5,7 +5,7 @@ export class MovieModel {
   public readonly overview: string;
   public readonly popularity: number;
   public readonly posterPath: string | null;
-  public readonly releaseDate: Date;
+  public readonly releaseDate: Date | null;
   public readonly title: string;
   public readonly voteAverage: number;
   public readonly voteCount: number;
@@ -17,7 +17,7 @@ export class MovieModel {
     overview: string;
     popularity: number;
     posterPath: string | null;
-    releaseDate: Date;
+    releaseDate: Date | null;
     title: string;
     voteAverage: number;
     voteCount: number;
@@ -36,6 +36,8 @@ export class MovieModel {
 
   // Formats the release date based on a lang
   public getFormattedReleaseDate(lang: string): string {
-    return this.releaseDate.toLocaleDateString(lang);
+    return this.releaseDate
+      ? this.releaseDate.toLocaleDateString(lang)
+      : "N/A";
   }
 }
