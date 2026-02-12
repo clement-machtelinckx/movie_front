@@ -4,7 +4,7 @@ import { i18nMap } from "../../i18n/map";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import useCurrentLang from "../../i18n/hooks/useCurrentLang";
-import useSearchMoviesQuery from "../../queries/useSearchMoviesQuery";
+import { useSearchMoviesQuery } from "../../queries/useSearchMoviesQuery";
 import MoviesTable from "../../components/MoviesTable";
 import { MovieModel } from "../../models/MovieModel";
 
