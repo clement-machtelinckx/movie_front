@@ -14,7 +14,10 @@ export default function Movies() {
   const currentLang = useCurrentLang();
   const { searchMoviesQueryResult: searchMoviesResponse } =
     useSearchMoviesQuery(searchTerm, currentLang);
-  const movies = searchMoviesResponse.data?.results ?? ([] as MovieModel[]);
+
+  // Filter out any undefined or null values from the results
+  const movies =
+    searchMoviesResponse.data?.results?.filter(Boolean) ?? ([] as MovieModel[]);
 
   return (
     <Box>
@@ -23,7 +26,13 @@ export default function Movies() {
         onSearch={setSearchTerm}
       />
 
-      <MoviesTable movies={movies} />
+      {searchMoviesResponse.isLoading && <p>Loading...</p>}
+
+      {searchMoviesResponse.error && <p>Something went wrong</p>}
+
+      {!searchMoviesResponse.isLoading && !searchMoviesResponse.error && (
+        <MoviesTable movies={movies} />
+      )}
     </Box>
   );
 }

@@ -7,7 +7,9 @@ export const movieDtoSchema = z.object({
   overview: z.string(),
   popularity: z.number(),
   poster_path: z.string().nullable(),
-  release_date: z.coerce.date(),
+  release_date: z
+    .string()
+    .transform((date) => (date && date.trim() !== "" ? new Date(date) : new Date())),
   title: z.string(),
   vote_average: z.number(),
   vote_count: z.number(),
