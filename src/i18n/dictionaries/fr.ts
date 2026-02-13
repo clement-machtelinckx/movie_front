@@ -16,6 +16,27 @@ export const fr: typeof en = {
       searchBar: {
         placeholder: "Rechercher des films...",
       },
+      table: {
+        id: "ID",
+        title: "Titre",
+        voteAverage: "Évaluation",
+        voteCount: "Nb de votes",
+        popularity: "Popularité",
+        releaseDate: "Date de sortie",
+      },
+    },
+    movie: {
+      card: {
+        releaseDate: "Date de sortie",
+        originalTitle: "Titre original",
+        originalLanguage: "Langue originale",
+        popularity: "Popularité",
+        voteAverage: "Évaluation",
+        voteCount: "Votes",
+      },
+      error: {
+        notFound: "Film non trouvé",
+      },
     },
   },
 };
